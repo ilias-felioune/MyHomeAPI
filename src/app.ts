@@ -6,6 +6,10 @@ import cookieParser from "cookie-parser";
 
 // Routers
 import indexRouter from "@/routes/Index";
+import userRouter from "@/routes/User";
+import sensorRouter from "@/routes/Sensor";
+import actuatorRouter from "@/routes/Actuator";
+
 const app = express();
 
 // view engine setup
@@ -17,6 +21,9 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
 app.use("/", indexRouter);
+app.use("/user",userRouter);
+app.use("/sensor",sensorRouter);
+app.use("/actuator",actuatorRouter);
 
 // catch 404
 app.use(function (req: Request, res: Response, next: NextFunction) {
