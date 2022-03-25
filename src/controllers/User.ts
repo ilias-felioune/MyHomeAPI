@@ -1,45 +1,51 @@
 import { NextFunction, Request, Response } from "express";
+import User from "./../database/userSchema"
+
 
 export default {
-  getAll: async (req: Request, res: Response, next: NextFunction) => {
+  getUser: async (req: Request, res: Response, next: NextFunction) => {
     try {
-      res.json({ message: "method userGet[]" });
+      const user = await User.findById(req.params.id);
+      res.json(user);
       return;
     } catch (error) {
       next(error);
     }
   },
-  get: async (req: Request, res: Response, next: NextFunction) => {
+  patchUser: async (req: Request, res: Response, next: NextFunction) => {
     try {
-      res.json({ message: "method userGet" });
+      const user = await User.findByIdAndUpdate(req.params.id,req.body)
+      res.json('Successfully update')
       return;
     } catch (error) {
       next(error);
     }
   },
-  post: async (req: Request, res: Response, next: NextFunction) => {
+  getAllUser: async (req: Request, res: Response, next: NextFunction) => {
     try {
-      res.json({ message: "method userPost" });
-      return;
-    } catch (error) {
+      //console.log("coucou")
+      const users = await User.find()
+      res.json(users)
+    }catch (error) {
       next(error);
     }
   },
-  patch: async (req: Request, res: Response, next: NextFunction) => {
+  postUser: async (req: Request, res: Response, next: NextFunction) => {
     try {
-      res.json({ message: "method userUpdate" });
-      return;
+      const user = new User(req.body);
+      user.save();
+      res.json(user)
     } catch (error) {
-      next(error);
+      res.send(error)
     }
   },
-  delete: async (req: Request, res: Response, next: NextFunction) => {
+  deleteUser: async (req: Request, res: Response, next: NextFunction)=>{
     try {
-      res.json({ message: "method userDelete" });
-      return;
+      await User.findByIdAndDelete(req.params.id);
+      res.json('Delete');
     } catch (error) {
-      next(error);
+      res.send(error)
     }
-  },
+  }
 
 };

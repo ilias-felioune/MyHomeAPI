@@ -3,10 +3,10 @@ import express from "express";
 const router = express.Router();
 
 /* user route section */
-router.get("/", user.getAll);
-router.get("/:id", user.get);
-router.post("/",user.post);
-router.patch("/:id",user.patch);
-router.delete("/:id",user.delete);
+router.get("/", user.getAllUser);
+router.get("/:id", user.getUser);
+router.post("/",user.postUser);
+router.patch("/:id",user.patchUser);
+router.delete("/:id",user.deleteUser);
 
 export default router;

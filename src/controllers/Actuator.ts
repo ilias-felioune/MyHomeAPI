@@ -1,41 +1,48 @@
 import { NextFunction, Request, Response } from "express";
+import Actuator from "@/database/actuatorSchema";
 
 export default {
-  getAll: async (req: Request, res: Response, next: NextFunction) => {
+  getAllActuator: async (req: Request, res: Response, next: NextFunction) => {
     try {
-      res.json({ message: "method actuatorGet[]" });
+      const actuator = await Actuator.find();
+      res.send(actuator);
       return;
     } catch (error) {
       next(error);
     }
   },
-  get: async (req: Request, res: Response, next: NextFunction) => {
+  getActuator: async (req: Request, res: Response, next: NextFunction) => {
     try {
-      res.json({ message: "method actuatorGet" });
+      const actuator = await Actuator.findById(req.params.id);
+      res.send(actuator);
       return;
     } catch (error) {
       next(error);
     }
   },
-  post: async (req: Request, res: Response, next: NextFunction) => {
+  postActuator: async (req: Request, res: Response, next: NextFunction) => {
     try {
-      res.json({ message: "method actuatorPost" });
+      const actuator = new Actuator(req.body);
+      await actuator.save();
+      res.send('OK');
       return;
     } catch (error) {
       next(error);
     }
   },
-  patch: async (req: Request, res: Response, next: NextFunction) => {
+  patchActuator: async (req: Request, res: Response, next: NextFunction) => {
     try {
-      res.json({ message: "method actuatorUpdate" });
+      await Actuator.findByIdAndUpdate(req.params.id,req.body);
+      res.send('OK');
       return;
     } catch (error) {
       next(error);
     }
   },
-  delete: async (req: Request, res: Response, next: NextFunction) => {
+  deleteActuator: async (req: Request, res: Response, next: NextFunction) => {
     try {
-      res.json({ message: "method actuatorDelete" });
+      await Actuator.findByIdAndDelete(req.params.id,req.body)
+      res.send('OK')
       return;
     } catch (error) {
       next(error);

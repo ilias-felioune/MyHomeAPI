@@ -1,41 +1,48 @@
 import { NextFunction, Request, Response } from "express";
+import Sensor from "@/database/sensorSchema"
 
 export default {
-  getAll: async (req: Request, res: Response, next: NextFunction) => {
+  getAllSensor: async (req: Request, res: Response, next: NextFunction) => {
     try {
-      res.json({ message: "method sensorGet[]" });
+      const sensor = await Sensor.find();
+      res.json(sensor);
       return;
     } catch (error) {
       next(error);
     }
   },
-  get: async (req: Request, res: Response, next: NextFunction) => {
+  getSensor: async (req: Request, res: Response, next: NextFunction) => {
     try {
-      res.json({ message: "method sensorGet" });
+      const sensor = await Sensor.findById(req.params.id);
+      res.json(sensor);
       return;
     } catch (error) {
       next(error);
     }
   },
-  post: async (req: Request, res: Response, next: NextFunction) => {
+  postSensor: async (req: Request, res: Response, next: NextFunction) => {
     try {
-      res.json({ message: "method sensorPost" });
+      const sensor = new Sensor(req.body);
+      sensor.save();
+      res.json(sensor)
       return;
     } catch (error) {
       next(error);
     }
   },
-  patch: async (req: Request, res: Response, next: NextFunction) => {
+  patchSensor: async (req: Request, res: Response, next: NextFunction) => {
     try {
-      res.json({ message: "method sensorUpdate" });
+      await Sensor.findByIdAndUpdate(req.params.id,req.body);
+      res.send('OK');
       return;
     } catch (error) {
       next(error);
     }
   },
-  delete: async (req: Request, res: Response, next: NextFunction) => {
+  deleteSensor: async (req: Request, res: Response, next: NextFunction) => {
     try {
-      res.json({ message: "method sensorDelete" });
+      await Sensor.findByIdAndDelete(req.params.id);
+      res.send('OK');
       return;
     } catch (error) {
       next(error);
