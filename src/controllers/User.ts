@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import User from "./../database/userSchema"
 import {getResponseType} from "./Response"
-import {hashPassword} from "../modules/Login"
+import {hashPassword,login} from "../modules/Login"
 
 
 export default {
@@ -74,13 +74,25 @@ export default {
   },
   userLogin: async (req: Request, res: Response, next: NextFunction)=>{
     try {
-      const user = {
+      const data = {
         email:req.body.email,
         password:req.body.password
       }
-      res.json(user)
+      const user = await User.create(data)
+      const token = await login(user)
+
+      if (token != "KO"){
+        const response = getResponseType("OK",{token:token})
+        res.json(response)
+      }
+      else{
+        res.status(403).json({ message: "access_denied" })
+      }
     } catch (error) {
-      
+        const response = getResponseType("KO")
+        console.error(error)
+        res.status(403).json(response)
+
     }
   }
   
