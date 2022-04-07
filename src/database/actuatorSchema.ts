@@ -19,6 +19,12 @@ export const ActuatorSchema = new Schema<Actuator>({
     state:Boolean,
 })
 
+ActuatorSchema.set('toJSON', {
+    virtuals: true,
+    versionKey:false,
+    transform: function (doc, ret) {   delete ret._id  }
+});
+
 
 const Actuator = mongoose.model('Actuator',ActuatorSchema);
 

@@ -6,7 +6,7 @@
 import app from "./app";
 import d from "debug";
 import http from "http";
-import dbConnect from "./database/database";
+import dbConnect from "./middleware/database";
 const debug = d("express-typescript-boilerplate:server");
 
 /**

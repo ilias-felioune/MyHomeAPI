@@ -19,6 +19,12 @@ export const SensorSchema = new Schema<Sensor>({
     rawValue: Schema.Types.Mixed,
 })
 
+SensorSchema.set('toJSON', {
+    virtuals: true,
+    versionKey:false,
+    transform: function (doc, ret) {   delete ret._id  }
+});
+
 const Sensor = mongoose.model('Sensor',SensorSchema)
 
 export default Sensor
