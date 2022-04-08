@@ -1,6 +1,7 @@
 import argon2, { hash } from "argon2"
-import User from "../database/userSchema"
 import jwt from "jsonwebtoken"
+import User, { UserType } from "../database/userSchema"
+
 
 async function hashPassword(password:string){
     try {
@@ -12,7 +13,7 @@ async function hashPassword(password:string){
 }
 
 
-async function login(userLogin:User){
+async function login(userLogin:UserType){
     
     const userDB = await User.findOne({email:userLogin.email}).select("+password")
     if (!userDB){

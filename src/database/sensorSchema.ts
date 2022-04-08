@@ -4,8 +4,8 @@ const mongoose = require('mongoose');
 //Interface Sensor
 enum SensorType{TEMPERATURE = "TEMPERATURE",HUMIDITY="HUMIDITY",BARO="BARO",PROXIMITY="PROXIMITY"}
 interface Sensor{
-    type: String,
-    designation : String,
+    type: string,
+    designation : string,
     rawValue : number | boolean,
 }
 

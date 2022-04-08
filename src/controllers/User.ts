@@ -78,8 +78,7 @@ export default {
         email:req.body.email,
         password:req.body.password
       }
-      const user = await User.create(data)
-      const token = await login(user)
+      const token = await login(data)
 
       if (token != "KO"){
         const response = getResponseType("OK",{token:token})

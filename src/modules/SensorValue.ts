@@ -8,28 +8,28 @@ interface infoSensor {
 }
 
 function getSensorValue(value : number,info:infoSensor){
-    let val = ((value * (info.out[1] - info.out[0]))/info.in[1])+info.out[0]
-    let result = val.toString()+info.unit
+    let tmp = ((value * (info.out[1] - info.out[0]))/info.in[1])+info.out[0]
+    const val = tmp.toFixed(2)
+    const result = val.toString()+info.unit
     return result
 }
 
-function getTypeSensorValue(type:string,value:number){
+function getTypeSensorValue(type:string,value:number | boolean){
     switch (type) {
         case SensorType.TEMPERATURE:
             const infoT:infoSensor= {in:[0,1023], out : [-20,55], unit : "°C"}
-            return getSensorValue(value,infoT)
+            return getSensorValue(value as number,infoT)
             break;
         case SensorType.BARO:
-            const infoB:infoSensor= {in:[0,1023], out : [-20,55], unit : "°C"}
-            return getSensorValue(value,infoB)
+            const infoB:infoSensor= {in:[0,1023], out : [950,1150], unit : "hPa"}
+            return getSensorValue(value as number,infoB)
             break
         case SensorType.HUMIDITY :
-            const infoH:infoSensor= {in:[0,1023], out : [-20,55], unit : "°C"}
-            return getSensorValue(value,infoH)
+            const infoH:infoSensor= {in:[0,1023], out : [0,100], unit : "%HR"}
+            return getSensorValue(value as number,infoH)
             break
         case SensorType.PROXIMITY:
-            const infoP:infoSensor= {in:[0,1023], out : [-20,55], unit : "°C"}
-            return getSensorValue(value,infoP)
+            return value as boolean
             break
         default:
             break;

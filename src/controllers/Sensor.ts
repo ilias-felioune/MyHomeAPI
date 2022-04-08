@@ -6,9 +6,20 @@ import {getTypeSensorValue} from "../modules/SensorValue"
 export default {
   getAllSensor: async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const sensor = await Sensor.find();
-      
-      const response = getResponseType("OK",sensor)
+      const sensors = await Sensor.find();
+
+      const sensorRes = sensors.map(({designation, type, rawValue}: Sensor)=> {
+        return {
+          designation,
+          type,
+          rawValue,
+          value:getTypeSensorValue(type,rawValue)
+
+        }
+      })
+
+      console.log(sensorRes)
+      const response = getResponseType("OK",sensorRes)
       res.json(response);
       return;
     } catch (error) {
@@ -21,7 +32,12 @@ export default {
     try {
       const sensor = await Sensor.findById(req.params.id);
       //sensor.value = getTypeSensorValue(sensor.type,sensor.rawValue)
-      const response = getResponseType("OK",sensor)
+      const sensorRes = {
+        type:sensor.type,
+        designation:sensor.designation,
+        value:getTypeSensorValue(sensor.type,sensor.rawValue)
+      }
+      const response = getResponseType("OK",sensorRes)
       res.json(response);
       return;
     } catch (error) {
