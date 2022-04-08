@@ -1,5 +1,5 @@
 import { Document, Model, model, Types, Schema, Query } from "mongoose"
-const mongoose = require('mongoose');
+import mongoose from "mongoose"
 
 //Interface Sensor
 enum SensorType{TEMPERATURE = "TEMPERATURE",HUMIDITY="HUMIDITY",BARO="BARO",PROXIMITY="PROXIMITY"}
@@ -25,6 +25,6 @@ SensorSchema.set('toJSON', {
     transform: function (doc, ret) {   delete ret._id  }
 });
 
-const Sensor = mongoose.model('Sensor',SensorSchema)
+const SensorModel = mongoose.model('Sensor',SensorSchema)
 
-export default Sensor
+export default SensorModel

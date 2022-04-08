@@ -1,7 +1,8 @@
 import { NextFunction, Request, Response } from "express";
 import { Document, Model, model, Types, Schema, Query } from "mongoose"
+import mongoose from "mongoose";
 
-const mongoose = require('mongoose');
+
 const dbConnectLink = 'mongodb+srv://ilias-felioune:APIdatabase@cluster0.wri8v.mongodb.net/smarthome?retryWrites=true&w=majority'
 const dbConnectLinkLocal ='mongodb://localhost:27017/smarthome';
 

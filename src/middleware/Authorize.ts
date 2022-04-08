@@ -8,6 +8,7 @@ import {getResponseType} from "@/controllers/Response"
 
 
 const authorize = async (req: Request, res: Response, next: NextFunction)=>{
+
     if (req.headers.authorization) {
         const token = req.headers.authorization.split(' ')[1];
         try {

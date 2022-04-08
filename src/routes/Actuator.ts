@@ -4,10 +4,11 @@ import Auth from "@/middleware/Authorize"
 const router = express.Router();
 
 /* actuator route section */
-router.get("/",Auth.authorize,actuator.getAllActuator);
-router.get("/:id",Auth.authorize,actuator.getActuator);
-router.post("/",Auth.authorize,actuator.postActuator);
-router.patch("/:id",Auth.authorize,actuator.patchActuator);
-router.delete("/:id",Auth.authorize,actuator.deleteActuator);
+router.use(Auth.authorize)
+router.get("/",actuator.getAllActuator);
+router.get("/:id",actuator.getActuator);
+router.post("/",actuator.postActuator);
+router.patch("/:id",actuator.patchActuator);
+router.delete("/:id",actuator.deleteActuator);
 
 export default router;

@@ -1,5 +1,5 @@
 import { Document, Model, model, Types, Schema, Query } from "mongoose"
-const mongoose = require('mongoose');
+import mongoose from "mongoose";
 
 //Interface Actuator
 enum ActuatorType {BLINDS="BLINDS",LIGHT="LIGHT"}

@@ -12,7 +12,7 @@ import userRouter from "@/routes/User";
 import sensorRouter from "@/routes/Sensor";
 import actuatorRouter from "@/routes/Actuator";
 import dbConnect from "@/middleware/database";
-require('dotenv').config()
+
 
 
 const app = express();
@@ -30,6 +30,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
 app.use(dbConnect);
+
 app.use("/", indexRouter);
 app.use("/user",userRouter);
 app.use("/sensor",sensorRouter);

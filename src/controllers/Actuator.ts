@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import Actuator from "@/database/actuatorSchema";
 import { getResponseType } from "./Response";
+import {ActuatorPostType, ActuatorUpdateType} from "@/types/ActuatorType"
 
 export default {
   getAllActuator: async (req: Request, res: Response, next: NextFunction) => {
@@ -29,7 +30,8 @@ export default {
   },
   postActuator: async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const actuator = new Actuator(req.body);
+      const parsedActuator = ActuatorPostType.parse(req.body) 
+      const actuator = new Actuator(parsedActuator);
       const response = getResponseType("OK",actuator)
       await actuator.save();
       res.json(response);
@@ -42,7 +44,8 @@ export default {
   },
   patchActuator: async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const actuator = await Actuator.findByIdAndUpdate(req.params.id,req.body);
+      const parsedActuator = ActuatorUpdateType.parse(req.body)
+      const actuator = await Actuator.findByIdAndUpdate(req.params.id,parsedActuator);
       const response = getResponseType("OK",actuator)
       res.json(response);
       return;
@@ -54,7 +57,7 @@ export default {
   },
   deleteActuator: async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const actuator = await Actuator.findByIdAndDelete(req.params.id,req.body)
+      const actuator = await Actuator.findByIdAndDelete(req.params.id)
       const response = getResponseType("OK",actuator)
       res.json(response)
       return;

@@ -6,9 +6,10 @@ const router = express.Router();
 /* user route section */
 router.post("/",user.postUser);
 router.post("/login",user.userLogin)
-router.get("/",Auth.authorize,user.getAllUser);
-router.get("/:id",Auth.authorize, user.getUser);
-router.patch("/:id",Auth.authorize,user.patchUser);
-router.delete("/:id",Auth.authorize,user.deleteUser);
+router.use(Auth.authorize)
+router.get("/",user.getAllUser);
+router.get("/:id", user.getUser);
+router.patch("/:id",user.patchUser);
+router.delete("/:id",user.deleteUser);
 
 export default router;
