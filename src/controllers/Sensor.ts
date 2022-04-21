@@ -54,8 +54,6 @@ export default {
   },
   postSensor: async (req: Request, res: Response, next: NextFunction) => {
     try {
-      var html = xss('<script>alert("xss");</script>');
-console.log(html);
       const sensor = new Sensor(req.body);
       const parsedSensor = SensorPostType.parse(sensor)
       const response = getResponseType("OK",parsedSensor)

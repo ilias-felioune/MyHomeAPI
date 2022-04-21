@@ -12,6 +12,7 @@ import userRouter from "@/routes/User";
 import sensorRouter from "@/routes/Sensor";
 import actuatorRouter from "@/routes/Actuator";
 import dbConnect from "@/middleware/database";
+import { preventionXss } from "./middleware/AttackPrevention";
 
 
 
@@ -25,6 +26,7 @@ const app = express();
 app.use(cors())
 app.use(logger("dev"));
 app.use(express.json());
+app.use(preventionXss);
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));

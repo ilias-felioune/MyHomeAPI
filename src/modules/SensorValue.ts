@@ -29,7 +29,7 @@ function getTypeSensorValue(type:string,value:number | boolean){
             return getSensorValue(value as number,infoH)
             break
         case SensorType.PROXIMITY:
-            return value as boolean
+            return value?"Actif":"Incatif"
             break
         default:
             break;
