@@ -2,13 +2,13 @@ import { Document, Model, model, Types, Schema, Query } from "mongoose"
 import mongoose from "mongoose"
 
 
-export interface UserType {
+export interface IUser {
     email: string;
     password: string;
     username?:string;
 }
 
-export const UserSchema = new Schema<UserType>({
+export const UserSchema = new Schema<IUser>({
     email: String,
     password: { type: String, select: false },
     username:String,

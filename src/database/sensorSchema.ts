@@ -25,6 +25,6 @@ SensorSchema.set('toJSON', {
     transform: function (doc, ret) {   delete ret._id  }
 });
 
-const SensorModel = mongoose.model('Sensor',SensorSchema)
+const Sensor = mongoose.model('Sensor',SensorSchema)
 
-export default SensorModel
+export default Sensor
