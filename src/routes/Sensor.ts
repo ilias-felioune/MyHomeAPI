@@ -1,12 +1,14 @@
 import sensor from "@/controllers/Sensor";
 import express from "express";
+import Auth from "@/middleware/Authorize"
 const router = express.Router();
 
 /* capteur route section */
-router.get("/",sensor.getAll);
-router.get("/:id",sensor.get);
-router.post("/",sensor.post);
-router.patch("/:id",sensor.patch);
-router.get("/:id",sensor.delete);
+router.use(Auth.authorize)
+router.get("/",sensor.getAllSensor);
+router.get("/:id",sensor.getSensor);
+router.post("/",sensor.postSensor);
+router.patch("/:id",sensor.patchSensor);
+router.delete("/:id",sensor.deleteSensor);
 
 export default router;

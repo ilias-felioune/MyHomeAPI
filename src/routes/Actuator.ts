@@ -1,12 +1,14 @@
 import actuator from "@/controllers/Actuator";
 import express from "express";
+import Auth from "@/middleware/Authorize"
 const router = express.Router();
 
 /* actuator route section */
-router.get("/",actuator.getAll);
-router.get("/:id",actuator.get);
-router.post("/",actuator.post);
-router.patch("/:id",actuator.patch);
-router.delete("/:id",actuator.delete);
+router.use(Auth.authorize)
+router.get("/",actuator.getAllActuator);
+router.get("/:id",actuator.getActuator);
+router.post("/",actuator.postActuator);
+router.patch("/:id",actuator.patchActuator);
+router.delete("/:id",actuator.deleteActuator);
 
 export default router;

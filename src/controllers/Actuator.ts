@@ -1,45 +1,73 @@
 import { NextFunction, Request, Response } from "express";
+import Actuator from "@/database/actuatorSchema";
+import { getResponseType } from "./Response";
+import {ActuatorPostType, ActuatorUpdateType} from "@/types/ActuatorType"
 
 export default {
-  getAll: async (req: Request, res: Response, next: NextFunction) => {
+  getAllActuator: async (req: Request, res: Response, next: NextFunction) => {
     try {
-      res.json({ message: "method actuatorGet[]" });
+      const actuator = await Actuator.find();
+      const response = getResponseType("OK",actuator)
+      res.json(response);
       return;
     } catch (error) {
+      const response = getResponseType("KO",null,error as Error)
+      res.json(response)
       next(error);
     }
   },
-  get: async (req: Request, res: Response, next: NextFunction) => {
+  getActuator: async (req: Request, res: Response, next: NextFunction) => {
     try {
-      res.json({ message: "method actuatorGet" });
+      const actuator = await Actuator.findById(req.params.id);
+      const response = getResponseType("OK",actuator)
+      res.json(response);
       return;
     } catch (error) {
+      const response = getResponseType("KO",null,error as Error)
+      res.json(response)
       next(error);
     }
   },
-  post: async (req: Request, res: Response, next: NextFunction) => {
+  postActuator: async (req: Request, res: Response, next: NextFunction) => {
     try {
-      res.json({ message: "method actuatorPost" });
+      const parsedActuator = ActuatorPostType.parse(req.body) 
+      const actuator = new Actuator(parsedActuator);
+      const response = getResponseType("OK",actuator)
+      await actuator.save();
+      res.json(response);
       return;
     } catch (error) {
+      const response = getResponseType("KO",null,error as Error)
+      res.json(response)
       next(error);
     }
   },
-  patch: async (req: Request, res: Response, next: NextFunction) => {
+  patchActuator: async (req: Request, res: Response, next: NextFunction) => {
     try {
-      res.json({ message: "method actuatorUpdate" });
+      const parsedActuator = ActuatorUpdateType.parse(req.body)
+      const actuator = await Actuator.findByIdAndUpdate(req.params.id,parsedActuator);
+      const response = getResponseType("OK",actuator)
+      res.json(response);
       return;
     } catch (error) {
+      const response = getResponseType("KO",null,error as Error)
+      res.json(response)
       next(error);
     }
   },
-  delete: async (req: Request, res: Response, next: NextFunction) => {
+  deleteActuator: async (req: Request, res: Response, next: NextFunction) => {
     try {
-      res.json({ message: "method actuatorDelete" });
+      const actuator = await Actuator.findByIdAndDelete(req.params.id)
+      const response = getResponseType("OK",actuator)
+      res.json(response)
       return;
     } catch (error) {
+      const response = getResponseType("KO",null,error as Error)
+      res.json(response)
       next(error);
     }
   },
 
 };
+
+
