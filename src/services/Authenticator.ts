@@ -30,7 +30,7 @@ class Authenticator implements IAuthenticator{
     async authorizeUser(token: string, id?: string | undefined, role?: string | undefined){
         try {
             const payload = jwt.verify(token,process.env.SECRET_KEY!) as {id:string}
-            console.log(payload.id)
+            //console.log(payload.id)
             if (id) {
                 const valid = id==payload.id
                 return {valid:valid,id:payload.id}

@@ -3,6 +3,7 @@ import User from "./../database/userSchema"
 import { getResponseType } from "./Response"
 import { UserPostType, UserUpdateType } from "@/types/UserType"
 import Authenticator from "@/services/Authenticator";
+import { myEmitter } from "..";
 
 
 export default {
@@ -56,6 +57,8 @@ export default {
         username: parsedUser.username
       }
       const user = await User.create(data)
+
+      myEmitter.emit("postUser", data)
 
       const response = getResponseType("OK", { id: user.id })
       user.save();

@@ -7,7 +7,7 @@ export const preventionXss = async (req: Request, res: Response, next: NextFunct
 
   
   try{
-    console.log(req.body)
+    //console.log(req.body)
 
     Object.entries(req.body).forEach(
       ([key, value]) => {
@@ -18,7 +18,7 @@ export const preventionXss = async (req: Request, res: Response, next: NextFunct
       });
     
     //console.log(html);
-    console.log("text: %s", req.body.value);
+    //console.log("text: %s", req.body.value);
 
     next();
 

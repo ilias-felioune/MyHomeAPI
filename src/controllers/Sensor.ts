@@ -81,7 +81,7 @@ export default {
   },
   deleteSensor: async (req: Request, res: Response, next: NextFunction) => {
     try {
-      console.log(req.params.id)
+      //console.log(req.params.id)
       const sensor = await Sensor.findByIdAndDelete(req.params.id);
       const response = getResponseType("OK",sensor)
       res.json(response);

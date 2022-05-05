@@ -7,6 +7,18 @@ import app from "./app";
 import d from "debug";
 import http from "http";
 import dbConnect from "./middleware/database";
+
+
+import EventEmitter from "events";
+import { Mailer } from "./services/Mailer";
+
+export const myEmitter = new EventEmitter();
+
+const mailer = new Mailer(myEmitter)
+
+mailer.init();
+
+
 const debug = d("express-typescript-boilerplate:server");
 
 /**

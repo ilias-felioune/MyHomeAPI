@@ -12,7 +12,7 @@ const authorize = async (req: Request, res: Response, next: NextFunction) => {
     if (req.headers.authorization) {
         const token = req.headers.authorization.split(' ')[1];
         const responseAuth = await auth.authorizeUser(token)
-        console.log(responseAuth)
+        //console.log(responseAuth)
         try {
             if (!responseAuth.valid) {
                 res.status(403).json({ message: "access_denied"});

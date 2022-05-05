@@ -9,7 +9,7 @@ const dbConnectLinkLocal ='mongodb://localhost:27017/smarthome';
 const dbConnect = async (req: Request, res: Response, next: NextFunction)=>{
     try {
         await mongoose.connect(dbConnectLinkLocal)
-        console.log("Successfuly connected to MongoDB")
+        //console.log("Successfuly connected to MongoDB")
         next()
 
     } catch (error) {
