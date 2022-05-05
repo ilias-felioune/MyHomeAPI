@@ -1,8 +1,8 @@
 import { NextFunction, Request, Response } from "express";
 import User from "./../database/userSchema"
 import { getResponseType } from "./Response"
-import { hashPassword, login } from "../modules/Login"
 import { UserPostType, UserUpdateType } from "@/types/UserType"
+import Authenticator from "@/services/Authenticator";
 
 
 export default {
@@ -20,7 +20,6 @@ export default {
   },
   patchUser: async (req: Request, res: Response, next: NextFunction) => {
     try {
-      console.log(req.body)
       const data = await UserUpdateType.parseAsync(req.body)
       const user = await User.findByIdAndUpdate(req.params.id, data)
       const response = getResponseType("OK", user)
@@ -47,8 +46,9 @@ export default {
   },
   postUser: async (req: Request, res: Response, next: NextFunction) => {
     try {
+      const auth:Authenticator = new Authenticator()
       const parsedUser = UserPostType.parse(req.body)
-      const hashPass = await hashPassword(parsedUser.password)
+      const hashPass = await auth.signup(parsedUser.password)
 
       const data = {
         email: parsedUser.email,
@@ -78,11 +78,12 @@ export default {
   },
   userLogin: async (req: Request, res: Response, next: NextFunction) => {
     try {
+      const auth:Authenticator = new Authenticator()
       const data = {
         email: req.body.email,
         password: req.body.password
       }
-      const token = await login(data)
+      const token = await auth.login(data)
 
       if (token != "KO") {
         const response = getResponseType("OK", { token: token })

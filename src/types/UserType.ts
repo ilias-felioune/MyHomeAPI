@@ -1,10 +1,11 @@
-import { hashPassword } from "@/modules/Login"
 import {z} from "zod"
+import Authenticator from "@/services/Authenticator"
 
+const auth:Authenticator = new Authenticator()
 
 export const UserUpdateType = z.object({
     email : z.string().email(),
-    password : z.string().transform(async (arg) =>{return await hashPassword(arg)}),
+    password : z.string().transform(async (arg) =>{return await auth.signup(arg)}),
     username : z.string()
 }).partial()
 
