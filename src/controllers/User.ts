@@ -56,9 +56,10 @@ export default {
         password: hashPass,
         username: parsedUser.username
       }
+
       const user = await User.create(data)
 
-      myEmitter.emit("postUser", data)
+      myEmitter.emit("postUser", {email:data.email,username:data.username})
 
       const response = getResponseType("OK", { id: user.id })
       user.save();

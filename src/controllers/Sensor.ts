@@ -3,7 +3,7 @@ import Sensor from "@/database/sensorSchema"
 import { getResponseType } from "./Response";
 import {getTypeSensorValue} from "../modules/SensorValue"
 import {SensorPostType,SensorUpdateType} from "@/types/SensorType"
-import xss from "xss";
+import { myEmitter } from "..";
 
 export default {
   getAllSensor: async (req: Request, res: Response, next: NextFunction) => {
@@ -71,6 +71,16 @@ export default {
     try {
       const parsedSensor = SensorUpdateType.parse(req.body)
       const sensor = await Sensor.findByIdAndUpdate(req.params.id,parsedSensor);
+      //console.log(sensor)
+      if ( (sensor?.rawValue != parsedSensor.rawValue) && parsedSensor.rawValue == true) {
+        const d = new Date();
+        var today = new Date();
+        var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+        var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+        var dateTime = date+' '+time;
+        myEmitter.emit("newAlarm", {designation:parsedSensor.designation,time:dateTime,email:"admin@gmail.com"})
+      } 
+      
       const response = getResponseType("OK",sensor)
       res.json(response);
       return;
