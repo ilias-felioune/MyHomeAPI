@@ -23,7 +23,8 @@ export class Mailer {
       const pathSmartHomeLogo2 = path.resolve("src/images","logo-maison-connectee-38a9f3c3.png")
       const templatePath = path.resolve("src","templateMail.html")
       const tmpFile = fs.readFileSync(templatePath,'utf8');
-      const file = Mustache.render(tmpFile,{maisonConnecteImage:pathSmartHomeLogo,maisonConnecteImage2:pathSmartHomeLogo2})
+      const replace = Object.assign({}, {maisonConnecteImage:pathSmartHomeLogo,maisonConnecteImage2:pathSmartHomeLogo2}, data)
+      const file = Mustache.render(tmpFile,replace)
       this.send("noreply@test.fr","noreply@test.fr","new user",data,file)
     });
     emetteur.addListener("newAlarm", (data) => { 
@@ -31,7 +32,8 @@ export class Mailer {
       const pathSmartHomeLogo = path.resolve("src/images","logo-maison-connectee-38a9f3c3.png")
       const templatePath = path.resolve("src","templateMailAlarm.html")
       const tmpFile = fs.readFileSync(templatePath,'utf8')
-      const file = Mustache.render(tmpFile,{logoMaisonConnecte:pathSmartHomeLogo,warningIcon:pathWarningIcon})
+      const replace = Object.assign({}, {logoMaisonConnecte:pathSmartHomeLogo,warningIcon:pathWarningIcon}, data)
+      const file = Mustache.render(tmpFile,replace)
       this.send("noreply@test.fr","noreply@test.fr","Warning Alarm",data,file)
     });
     
@@ -55,14 +57,14 @@ export class Mailer {
   } 
 
   send(fromEmail:string, toEmail:string, subject:string, data:any,templateFile:string){
-    const output = Mustache.render(templateFile,data)
 
+    
     var mailOptions = {
       from: fromEmail,
       to: data.email,
       subject: subject,
       text: data.email,
-      html:output
+      html:templateFile
     };
     
     this.transporter?.sendMail(mailOptions, function(error: any, info: { response: string; }){
