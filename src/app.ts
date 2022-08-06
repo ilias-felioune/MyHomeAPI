@@ -26,6 +26,7 @@ app.use("/sensor",sensorRouter);
 app.use("/actuator",actuatorRouter);
 
 // catch 404
+//NewComments
 app.use(function (req: Request, res: Response, next: NextFunction) {
   // handle it how it pleases you
   res.status(404).json({ message: "not_found" });
