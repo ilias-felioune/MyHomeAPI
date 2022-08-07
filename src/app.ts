@@ -27,6 +27,7 @@ app.use("/actuator",actuatorRouter);
 
 // catch 404
 //NewCommentsV2
+//new
 app.use(function (req: Request, res: Response, next: NextFunction) {
   // handle it how it pleases you
   res.status(404).json({ message: "not_found" });
